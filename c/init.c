@@ -57,6 +57,7 @@ void initproc( void )				/* The beginning */
   kprintf(str);
 
   /* Add your code below this line and before next comment */
+  kmeminit();
 
 
 

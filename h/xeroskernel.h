@@ -41,7 +41,10 @@ void           lidt(void);
 void           outb(unsigned int, unsigned char);
 void           set_evec(unsigned int xnum, unsigned long handler);
 
-
+/* Functions for assignment 1 */
+extern void kmeminit(void);
+extern void *kmalloc(int size);
+extern void kfree(void *ptr);
 
 
 /* Anything you add must be between the #define and this comment */
