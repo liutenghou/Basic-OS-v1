@@ -40,7 +40,7 @@ void initproc( void )				/* The beginning */
      in the termination condition to control the pause
    */
 
-  for (i = 0; i < 3000000; i++);
+  for (i = 0; i < 1000000; i++);
 
   /* Build a string to print) */
   sprintf(str, 
@@ -52,7 +52,7 @@ void initproc( void )				/* The beginning */
   kprintf("\n\nThe %dstring is: \"%s\"\n\nThe formula is %d + %d = %d.\n\n\n", 
 	  a, str, a, b, a + b);
 
-  for (i = 0; i < 4000000; i++);
+  for (i = 0; i < 1000000; i++);
   /* or just on its own */
   kprintf(str);
 
@@ -61,7 +61,7 @@ void initproc( void )				/* The beginning */
 
 
 
-  for (i = 0; i < 2000000; i++);
+  for (i = 0; i < 1000000; i++);
   /* Add all of your code before this comment and after the previous comment */
   /* This code should never be reached after you are done */
   kprintf("\n\nWhen the kernel is working properly ");
