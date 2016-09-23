@@ -45,6 +45,7 @@ void           set_evec(unsigned int xnum, unsigned long handler);
 extern void kmeminit(void);
 extern void *kmalloc(int size);
 extern void kfree(void *ptr);
+extern void printNodes(void);
 
 
 /* Anything you add must be between the #define and this comment */

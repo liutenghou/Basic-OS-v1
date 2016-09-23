@@ -60,6 +60,22 @@ void initproc( void )				/* The beginning */
   kmeminit();
 
 
+  printNodes();
+
+  long *memLocation = (long *)kmalloc(620280);
+  //kprintf("memLocation: %d", memLocation);
+  // long *memLocation2 = (long *)kmalloc(20);
+  // kprintf("memLocation: %d", memLocation2);
+  // long *memLocation3 = (long *)kmalloc(1000000);
+  // kprintf("memLocation: %d", memLocation3);
+  // long *memLocation4 = (long *)kmalloc(20000);
+  // kprintf("memLocation: %d", memLocation4);
+  // long *memLocation5 = (long *)kmalloc(20000);
+  // kprintf("memLocation: %d", memLocation5);
+  // long *memLocation6 = (long *)kmalloc(200000);
+  // kprintf("memLocation: %d", memLocation6);
+
+
 
   for (i = 0; i < 1000000; i++);
   /* Add all of your code before this comment and after the previous comment */
