@@ -42,10 +42,30 @@ void           outb(unsigned int, unsigned char);
 void           set_evec(unsigned int xnum, unsigned long handler);
 
 /* Functions for assignment 1 */
+
+//sets up to pcb struct
+struct pcb{
+	int PID;
+	int state;
+	int parent_pid;
+	//struct CPU cpu_state;
+	struct pcb *next;
+};
+
+#define CREATE 100
+#define YIELD 101
+#define STOP 102
+
 extern void kmeminit(void);
 extern void *kmalloc(int size);
 extern void kfree(void *ptr);
 extern void printNodes(void);
+extern void dispatch(void); //dispatcher stuff
+extern void ready(struct pcb* p);
+extern void cleanup(struct pcb* p);
+extern int contextswitch(struct pcb* p);
+extern void create(void); //create.c
+extern struct pcb* next(void);
 
 
 /* Anything you add must be between the #define and this comment */

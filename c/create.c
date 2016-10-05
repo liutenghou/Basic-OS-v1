@@ -4,3 +4,7 @@
 #include <xeroskernel.h>
 
 /* Your code goes here. */
+//create a process
+void create(){
+
+}

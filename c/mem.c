@@ -32,7 +32,7 @@ void kmeminit(void){
   memSlot->next->size = (unsigned long)(maxaddr - HOLEEND);
   memSlot->next->sanityCheck = "pizzapizza";
 
-  kprintf("freemem: %d, memSlotSize: %d, memSlotNextSize: %d, memSlot: %d\n", freemem, memSlot->size, memSlot->next->size, memSlot);
+  kprintf("freemem: %d, memSlotSize: %d, memSlotNextSize: %d, memSlotNext: %d\n", freemem, memSlot->size, memSlot->next->size, memSlot->next);
 }
 
 //shows free mem nodes
@@ -80,7 +80,7 @@ void *kmalloc(int size){
 	//give portion of node if there is enough space for another node
 	if((temp->size - sizeWithHeader)>20){ //minimum 4bytes left over -> 16+4?
 		struct memHeader *newNode = (struct memHeader *)(temp + sizeIn16); //new node with free RAM
-		kprintf("temp:%d*newNode:%d*",temp,newNode);
+		kprintf("<temp:%d*newNode:%d*>",temp,newNode);
 
 		//TODO: fix logic
 		if(temp->prev == NULL){ //if head
@@ -105,7 +105,7 @@ void *kmalloc(int size){
 			//kprintf("BROKE1 newNode:%d*tempPrevNext:%d",newNode,temp->prev->next);
 			newNode->next = NULL;
 
-			kprintf("BROKE2");
+//			kprintf("BROKE2");
 			newNode->prev = temp->prev;
 			newNode->size = (temp->size) - sizeWithHeader;
 			newNode->sanityCheck = "pizzapizza";
