@@ -7,13 +7,19 @@
 // note pcb struct in xeroshernel.h
 
 struct pcb* process;
+struct pcb* readyQueue;
+struct pcb* blockedQueue;
+
 int request = 0;
 
 void dispatch() {
+
+	kprintf("d:");
 	for (;;) {
+		process = next();
 		request = contextswitch(process);
 		switch (request) {
-		case CREATE:
+		case (CREATE):
 			create();
 			break;
 		case (YIELD):
@@ -38,6 +44,10 @@ void cleanup(struct pcb* p){
 	//cleanup process
 }
 
+//get next ready process
 struct pcb* next(){
+
+	//TODO: work on this next
+
 	return (struct pcb*)0;
 }

@@ -46,11 +46,15 @@ void           set_evec(unsigned int xnum, unsigned long handler);
 //sets up to pcb struct
 struct pcb{
 	int PID;
+	unsigned long *esp;
 	int state;
 	int parent_pid;
 	//struct CPU cpu_state;
 	struct pcb *next;
 };
+
+//declare the actual array of pcbs
+extern struct pcb* process_array[256];
 
 #define CREATE 100
 #define YIELD 101

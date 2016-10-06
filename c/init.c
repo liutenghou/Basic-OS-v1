@@ -78,6 +78,10 @@ void initproc( void )				/* The beginning */
   // kprintf("memLocation: %d", memLocation6);
 
    //TODO: the last thing init does is create the first user process, then call dispatch()
+   //onto the dispatcher
+   kprintf("\n\n");
+   dispatch();
+
 
   for (i = 0; i < 1000000; i++);
   /* Add all of your code before this comment and after the previous comment */

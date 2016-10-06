@@ -14,6 +14,34 @@
 // switches to context of that process and lets it run via iret
 // IDT has entrypoint for this function
 int contextswitch(struct pcb* p){
+	kprintf("c:");
+	void _ISREntryPoint();
+	static void *k_stack;
+	static unsigned int ESP;
+	int contextswitch(struct pcb *p){
+		ESP = p->esp;
+		__asm __volatile("\
+				pushf \n\ 
+		        pusha \n\
+		        movl %%esp, k_stack \n\
+		        movl ESP, %%esp \n\
+		        popa \n\
+		        iret \n\
+		__ISREntryPoint: \n\
+		    pusha \n\
+		    movl %%esp, ESP \n\
+		    movl k_stack, %%esp \n\
+		    popa \n\
+		    popf \n\
+		    "
+		    :
+		    :
+		    : "%eax"
+		    );
+		p->esp = ESP;
+	}
+
+
 	return 100;
 }
 
