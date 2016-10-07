@@ -47,19 +47,39 @@ void           set_evec(unsigned int xnum, unsigned long handler);
 struct pcb{
 	int PID;
 	unsigned long *esp;
-	int state;
-	int parent_pid;
+	int state; //stopped, ready, waiting, running, setc
+	int parent_pid; //not needed?
+	int ret;
 	//struct CPU cpu_state;
 	struct pcb *next;
+	void (*firstFunction)(void); //first function for the process
+};
+//registers on stack
+struct context_frame {
+	unsigned long edi;
+	unsigned long esi;
+	unsigned long ebp;
+	unsigned long esp;
+	unsigned long ebx;
+	unsigned long edx;
+	unsigned long ecx;
+	unsigned long eax;
+	unsigned long iret_eip;
+	unsigned long iret_cs; //use getcs();
+	unsigned long eflags;
 };
 
-//declare the actual array of pcbs
+//array of pcbs
 extern struct pcb* process_array[256];
 
+#define PROCSIZE 8192
 #define CREATE 100
 #define YIELD 101
-#define STOP 102
+#define STOP 0
+#define NUMPROC 256
 
+
+extern char	*maxaddr;	/* max memory address (set in i386.c)	*/
 extern void kmeminit(void);
 extern void *kmalloc(int size);
 extern void kfree(void *ptr);
@@ -68,7 +88,8 @@ extern void dispatch(void); //dispatcher stuff
 extern void ready(struct pcb* p);
 extern void cleanup(struct pcb* p);
 extern int contextswitch(struct pcb* p);
-extern void create(void); //create.c
+extern int create(void (*func)(void)); //create.c
+void light(void); //first process, user
 extern struct pcb* next(void);
 
 

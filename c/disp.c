@@ -6,21 +6,21 @@
 /* Your code goes here */
 // note pcb struct in xeroshernel.h
 
-struct pcb* process;
-struct pcb* readyQueue;
-struct pcb* blockedQueue;
-
+struct pcb *process;
+struct pcb *readyQueue;
+struct pcb *blockedQueue;
 int request = 0;
 
 void dispatch() {
 
 	kprintf("d:");
 	for (;;) {
-		process = next();
+		process = next(); //get next ready process
 		request = contextswitch(process);
+		kprintf("b:");
 		switch (request) {
 		case (CREATE):
-			create();
+			create(process->firstFunction);
 			break;
 		case (YIELD):
 			ready(process);
@@ -44,10 +44,10 @@ void cleanup(struct pcb* p){
 	//cleanup process
 }
 
-//get next ready process
+//returns pointer to next ready process
 struct pcb* next(){
 
 	//TODO: work on this next
 
-	return (struct pcb*)0;
+	return (struct pcb*)30000;
 }

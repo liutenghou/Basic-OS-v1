@@ -64,13 +64,13 @@ void initproc( void )				/* The beginning */
 
   printNodes();
 
-  long *memLocation = (long *)kmalloc(16);
+//  long *memLocation = (long *)kmalloc(16);
   //kprintf("memLocation: %d", memLocation);
-  long *memLocation2 = (long *)kmalloc(20);
+//  long *memLocation2 = (long *)kmalloc(20);
   // kprintf("memLocation: %d", memLocation2);
-  long *memLocation3 = (long *)kmalloc(1000000);
+//  long *memLocation3 = (long *)kmalloc(1000000);
   // kprintf("memLocation: %d", memLocation3);
-   long *memLocation4 = (long *)kmalloc(20000);
+//   long *memLocation4 = (long *)kmalloc(20000);
   // kprintf("memLocation: %d", memLocation4);
   // long *memLocation5 = (long *)kmalloc(20000);
   // kprintf("memLocation: %d", memLocation5);
@@ -80,6 +80,7 @@ void initproc( void )				/* The beginning */
    //TODO: the last thing init does is create the first user process, then call dispatch()
    //onto the dispatcher
    kprintf("\n\n");
+   create(light); //create the first process
    dispatch();
 
 
