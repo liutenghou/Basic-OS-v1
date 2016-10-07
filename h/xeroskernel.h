@@ -43,9 +43,17 @@ void           set_evec(unsigned int xnum, unsigned long handler);
 
 /* Functions for assignment 1 */
 
+struct memHeader{
+  unsigned long size;
+  struct memHeader *prev;
+  struct memHeader *next;
+  char *sanityCheck;
+  unsigned char dataStart[0];
+};
+
 //sets up to pcb struct
 struct pcb{
-	int PID;
+	int pid;
 	unsigned long *esp;
 	int state; //stopped, ready, waiting, running, setc
 	int parent_pid; //not needed?
@@ -58,8 +66,8 @@ struct pcb{
 struct context_frame {
 	unsigned long edi;
 	unsigned long esi;
-	unsigned long ebp;
-	unsigned long esp;
+	unsigned long ebp; //base pointer
+	unsigned long esp; //stack pointer
 	unsigned long ebx;
 	unsigned long edx;
 	unsigned long ecx;
@@ -76,6 +84,7 @@ extern struct pcb* process_array[256];
 #define CREATE 100
 #define YIELD 101
 #define STOP 0
+#define READY 102
 #define NUMPROC 256
 
 

@@ -7,7 +7,6 @@
 extern	int	entry( void );  /* start of kernel image, use &start    */
 extern	int	end( void );    /* end of kernel image, use &end        */
 extern  long	freemem; 	/* start of free memory (set in i386.c) */
-extern char	*maxaddr;	/* max memory address (set in i386.c)	*/
 
 /************************************************************************/
 /***				NOTE:				      ***/
@@ -81,7 +80,7 @@ void initproc( void )				/* The beginning */
    //onto the dispatcher
    kprintf("\n\n");
    create(light); //create the first process
-   dispatch();
+   //dispatch();
 
 
   for (i = 0; i < 1000000; i++);

@@ -6,14 +6,6 @@
 extern long freemem;
 char *maxaddr;
 
-struct memHeader{
-  unsigned long size;
-  struct memHeader *prev;
-  struct memHeader *next;
-  char *sanityCheck;
-  unsigned char dataStart[0];
-};
-
 struct memHeader *memSlot;
 
 //Initialize mem
