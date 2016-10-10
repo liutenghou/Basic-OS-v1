@@ -21,6 +21,7 @@ int contextswitch(struct pcb* p){
 	kprintf("c:");
 
 	ESP = p->esp;
+	kprintf("ESP:%d *", ESP);
 	__asm __volatile("\
 			pushf \n\ 
 			pusha \n\

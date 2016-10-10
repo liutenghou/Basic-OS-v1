@@ -79,8 +79,9 @@ void initproc( void )				/* The beginning */
    //TODO: the last thing init does is create the first user process, then call dispatch()
    //onto the dispatcher
    kprintf("\n\n");
+   initProcessArray();
    create(light); //create the first process
-   //dispatch();
+   dispatch();
 
 
   for (i = 0; i < 1000000; i++);

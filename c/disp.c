@@ -46,8 +46,12 @@ void cleanup(struct pcb* p){
 
 //returns pointer to next ready process
 struct pcb* next(){
-
+	struct pcb* p;
 	//TODO: work on this next
+	//go through the process_array, look for next ready process
+	p = process_array[0];
+	kprintf("IN NEXT:");
+	kprintf("p->pid:%d * p->sanityCheck:%s *", p->pid, p->sanityCheck);
 
-	return (struct pcb*)30000;
+	return p;
 }

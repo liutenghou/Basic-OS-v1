@@ -57,6 +57,7 @@ struct pcb{
 	unsigned long *esp;
 	int state; //stopped, ready, waiting, running, setc
 	int parent_pid; //not needed?
+	char *sanityCheck;
 	int ret;
 	//struct CPU cpu_state;
 	struct pcb *next;
@@ -78,14 +79,15 @@ struct context_frame {
 };
 
 //array of pcbs
-extern struct pcb* process_array[256];
+
+#define NUMPROC 256
+extern struct pcb* process_array[NUMPROC];
 
 #define PROCSIZE 8192
 #define CREATE 100
 #define YIELD 101
 #define STOP 0
 #define READY 102
-#define NUMPROC 256
 
 
 extern char	*maxaddr;	/* max memory address (set in i386.c)	*/
@@ -97,6 +99,7 @@ extern void dispatch(void); //dispatcher stuff
 extern void ready(struct pcb* p);
 extern void cleanup(struct pcb* p);
 extern int contextswitch(struct pcb* p);
+void initProcessArray(void);
 extern int create(void (*func)(void)); //create.c
 void light(void); //first process, user
 extern struct pcb* next(void);
