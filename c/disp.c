@@ -5,6 +5,7 @@
 
 /* Your code goes here */
 // note pcb struct in xeroshernel.h
+// kernel space
 
 struct pcb *process;
 struct pcb *readyQueue;
@@ -15,6 +16,15 @@ void dispatch() {
 
 	kprintf("d:");
 	for (;;) {
+
+		//for testing
+		int i;
+		for (i=0; i<3; i++){
+			if(i==2){
+				break;
+			}
+		}
+
 		process = next(); //get next ready process
 		request = contextswitch(process);
 		kprintf(" backtod:");
@@ -39,10 +49,16 @@ void dispatch() {
 	}
 }
 
+//--> kernel space
+
+//add current process p to ready queue,
+//remove next process on ready queue to run
 void ready(struct pcb* p){
 	//make process ready
 }
 
+//cleanup current process p
+//remove next process on ready queue to run
 void cleanup(struct pcb* p){
 	//cleanup process
 }

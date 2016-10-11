@@ -103,7 +103,11 @@ void initProcessArray(void);
 void contextinit(void);
 extern int create(void (*func)(void)); //create.c
 void light(void); //first process, user
+extern int syscall(int call, char *sargs); //syscall.c
 extern struct pcb* next(void);
+extern unsigned int syscreate( void (*func)(void), int stack );
+extern void sysyield( void );
+extern void sysstop( void );
 
 
 /* Anything you add must be between the #define and this comment */
