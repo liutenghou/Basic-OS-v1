@@ -8,12 +8,13 @@ void producer(void);
 void consumer(void);
 
 //first process
-void light(){
+void root(){
 	kprintf("Hello, World!"); //I can't believe this is printing
 	//no more using create()
 	syscreate(producer);
 	syscreate(consumer);
-	for(;;){
+	int i;
+	for(i=0;i<5;i++){ //TODO: change to infinite later
 		sysyield();
 	}
 }

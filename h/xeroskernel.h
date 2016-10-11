@@ -61,7 +61,7 @@ struct pcb{
 	int ret;
 	//struct CPU cpu_state;
 	struct pcb *next;
-	void (*firstFunction)(void); //first function for the process
+	void (*function)(void); //first function for the process
 };
 //registers on stack
 struct context_frame {
@@ -85,7 +85,7 @@ extern struct pcb process_array[NUMPROC];
 
 #define PROCSIZE 8192
 #define CREATE 100
-#define YIELD 101
+#define YIELD 131
 #define STOP 0
 #define READY 102
 
@@ -102,8 +102,8 @@ extern int contextswitch(struct pcb* p);
 void initProcessArray(void);
 void contextinit(void);
 extern int create(void (*func)(void)); //create.c
-void light(void); //first process, user
-extern int syscall(int call, unsigned int numargs, ...); //syscall.c
+void root(void); //first process, user
+extern int syscall(int call, unsigned int numargs, void *funcptr); //syscall.c
 extern struct pcb* next(void);
 extern unsigned int syscreate( void (*func)(void));
 extern void sysyield( void );

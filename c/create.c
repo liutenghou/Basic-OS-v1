@@ -74,7 +74,7 @@ int create(void (*func)(void)){
 	p->ret = NULL; //return address
 		//struct CPU cpu_state;
 	p->next = NULL;
-	p->firstFunction; //first function for the process
+	p->function; //first function for the process
 	//put the context frame at the end
 	return p->pid;
 }

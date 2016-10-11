@@ -30,11 +30,11 @@ void dispatch() {
 		//kprintf(" backtod:");
 		switch (request) {
 		case (CREATE):
-			kprintf(" CREATE:");
-			create(process->firstFunction);
+			kprintf(" 4CREATE:");
+			create(process->function);
 			break;
 		case (YIELD):
-			kprintf(" YIELD:");
+			kprintf(" 2YIELD:");
 			ready(process);
 			process = next();
 			break;

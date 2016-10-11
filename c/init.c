@@ -80,7 +80,7 @@ void initproc( void )				/* The beginning */
    //onto the dispatcher
    kprintf("\n\n");
    initProcessArray();
-   create(light); //create the first process
+   create(root); //create the first process
 
    contextinit();
    dispatch();

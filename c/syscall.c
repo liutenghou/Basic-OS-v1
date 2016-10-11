@@ -2,46 +2,46 @@
  */
 
 #include <xeroskernel.h>
-#include <stdarg.h>
 /* Your code goes here */
 
 
 //call: CREATE, YIELD, STOP
 //returns: pid of process
-int syscall(int call, unsigned int numargs, ...){
-	va_list arguments;
-	va_start(arguments, numargs);
-
-
-
+int syscall(int call, unsigned int numargs, void *funcptr){
+	int *function;
+	if(numargs == 1){
+		function = (void (*)(void))funcptr;
+	}
 	int result;
-		kprintf(" call: %d ", call);
+		kprintf(" 0call: %d ", call);
 		//TODO: put arguments in register
 		//asm volatile ("movl %0, %esp" : "g" (userstack));
 		__asm __volatile("movl %1, %%eax;"
+						"movl %2, %%edx;"
 						"int $49;"
 						"movl %%eax, %0;"
-			: "=r" (result)		/*output operand*/
-			: "r" (call)	/*input operand*/
-			: "%eax"			/*clobbered register*/
+			: "=r" (result)					/*output operand*/
+			: "r" (call), "r" (function)	/*input operand*/
+			: "%eax"						/*clobbered register*/
 			);
-		kprintf(" result: %d ", result);
+		kprintf(" 1result: %d, function:%d *", result, function);
 		return result;
 	return 0;
 }
 
 unsigned int syscreate( void (*func)(void)){
 	//note: stack size is always PROCSIZE
-	syscall(CREATE, 1, func);
+	kprintf(" syscreate:%d ", func);
+	syscall(CREATE, 1, (void*)func);
 	return 0;
 }
 
 //yield to next ready process
 void sysyield( void ){
-	syscall(YIELD, 0, NULL);
+	syscall(YIELD, 0, (void*)0);
 }
 
 //stop and cleanup
 void sysstop( void ){
-	syscall(STOP, 0, NULL);
+	syscall(STOP, 0, (void*)0);
 }
