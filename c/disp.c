@@ -34,12 +34,12 @@ void dispatch() {
 			create(process->firstFunction);
 			break;
 		case (YIELD):
-			//kprintf(" YIELD:");
+			kprintf(" YIELD:");
 			ready(process);
 			process = next();
 			break;
 		case (STOP):
-			//kprintf(" STOP:");
+			kprintf(" STOP:");
 			cleanup(process);
 			process = next();
 			break;

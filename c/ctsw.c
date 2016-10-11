@@ -42,7 +42,7 @@ int contextswitch(struct pcb* p){
 		pusha \n\
 		movl %%esp, ESP \n\
 		movl k_stack, %%esp \n\
-		movl EAX, %%eax \n\
+		movl %%eax, EAX \n\
 		popa \n\
 		popf \n\
 		"
