@@ -30,8 +30,8 @@ extern unsigned int syscreate( void (*func)(void), int stack ){
 
 
 extern void sysyield( void ){
-	return syscall(1, "YEILD");
+	syscall(1, "YEILD");
 }
 extern void sysstop( void ){
-	return syscall(1, "STOP");
+	syscall(1, "STOP");
 }
