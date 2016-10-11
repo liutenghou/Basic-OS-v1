@@ -17,10 +17,18 @@ void _ISREntryPoint();
 static void *k_stack;
 static unsigned int ESP;
 
+
+//saves kernel state
+//loads user process state into registers
+//iret executes user process code
+
+//saves user process state
+//loads kernel state back to registers
+//returns to dispatcher to handle syscall
 int contextswitch(struct pcb* p){
 	kprintf("\nc:");
 
-	ESP = p->esp;
+	ESP = (unsigned int)p->esp;
 	kprintf("ESP:%d *", ESP);
 	__asm __volatile("\
 			pushf \n\ 
@@ -49,5 +57,5 @@ int contextswitch(struct pcb* p){
 //contextinit() initializes the context switcher and sets the entrypoint for contextswitch in the IDT
 void contextinit(void){
 	kprintf(" INITCONTEXT ");
-	set_evec(49, _ISREntryPoint);
+	set_evec(49, (int)_ISREntryPoint);
 }

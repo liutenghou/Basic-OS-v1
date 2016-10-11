@@ -10,8 +10,9 @@ void consumer(void);
 //first process
 void light(){
 	kprintf("Hello, World!"); //I can't believe this is printing
-
-
+	//no more using create()
+	syscreate(producer);
+	syscreate(consumer);
 	for(;;){
 		sysyield();
 	}
