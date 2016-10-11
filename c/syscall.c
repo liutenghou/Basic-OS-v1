@@ -20,7 +20,7 @@ int syscall(int num, char* inst, ...){
 		: "%eax"
 		);
 
-	return result
+	return result;
 }
 
 
