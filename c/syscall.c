@@ -7,8 +7,8 @@
 
 
 int syscall(int call, ...){
-	int result;
-	int cat = *call;
+	static int result;
+	static int cat = call;
 
 	//TODO: put arguments in register
 	//asm volatile ("movl %0, %esp" : "g" (userstack));
