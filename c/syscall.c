@@ -4,8 +4,8 @@
 #include <xeroskernel.h>
 
 /* Your code goes here */
-static unsigned int result;
-static unsigned int cat;
+static int result;
+static int cat;
 
 int syscall(int call, ...){
 	cat = call;
