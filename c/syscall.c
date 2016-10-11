@@ -4,11 +4,11 @@
 #include <xeroskernel.h>
 
 /* Your code goes here */
-
+static unsigned int result;
+static unsigned int cat;
 
 int syscall(int call, ...){
-	static int result;
-	static int cat = call;
+	cat = call;
 
 	//TODO: put arguments in register
 	//asm volatile ("movl %0, %esp" : "g" (userstack));
