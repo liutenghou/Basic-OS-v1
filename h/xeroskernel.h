@@ -105,9 +105,13 @@ extern int create(void (*func)(void)); //create.c
 void light(void); //first process, user
 extern int syscall(int call, unsigned int numargs, char *sargs); //syscall.c
 extern struct pcb* next(void);
+<<<<<<< HEAD
 extern unsigned int syscreate( void (*func)(void));
 extern void sysyield( void );
 extern void sysstop( void );
+=======
+extern int syscall( int call, ... );
+>>>>>>> origin/dan2
 
 
 /* Anything you add must be between the #define and this comment */
