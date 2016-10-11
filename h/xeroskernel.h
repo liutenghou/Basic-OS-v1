@@ -81,7 +81,7 @@ struct context_frame {
 //array of pcbs
 
 #define NUMPROC 256
-extern struct pcb* process_array[NUMPROC];
+extern struct pcb process_array[NUMPROC];
 
 #define PROCSIZE 8192
 #define CREATE 100
@@ -100,6 +100,7 @@ extern void ready(struct pcb* p);
 extern void cleanup(struct pcb* p);
 extern int contextswitch(struct pcb* p);
 void initProcessArray(void);
+void contextinit(void);
 extern int create(void (*func)(void)); //create.c
 void light(void); //first process, user
 extern struct pcb* next(void);

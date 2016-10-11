@@ -18,7 +18,7 @@ static void *k_stack;
 static unsigned int ESP;
 
 int contextswitch(struct pcb* p){
-	kprintf("c:");
+	kprintf("\nc:");
 
 	ESP = p->esp;
 	kprintf("ESP:%d *", ESP);
@@ -29,7 +29,7 @@ int contextswitch(struct pcb* p){
 			movl ESP, %%esp \n\
 			popa \n\
 			iret \n\
-	__ISREntryPoint: \n\
+	_ISREntryPoint: \n\
 		pusha \n\
 		movl %%esp, ESP \n\
 		movl k_stack, %%esp \n\
@@ -41,9 +41,13 @@ int contextswitch(struct pcb* p){
 		: "%eax"
 		);
 	p->esp = ESP;
-
-	return 100;
+	kprintf(" END CS\n");
+	return YIELD;
 }
 
 
 //contextinit() initializes the context switcher and sets the entrypoint for contextswitch in the IDT
+void contextinit(void){
+	kprintf(" INITCONTEXT ");
+	set_evec(49, _ISREntryPoint);
+}

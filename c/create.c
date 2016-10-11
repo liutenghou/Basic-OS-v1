@@ -4,15 +4,17 @@
 #include <xeroskernel.h>
 
 /* Your code goes here. */
-struct pcb* process_array[NUMPROC]; //global, goes in kernel stack
+struct pcb process_array[NUMPROC]; //global, goes in kernel stack
 int processCount = 0;
 
 //initialize the process_array
 void initProcessArray(void){
-	int i;
-	for(i=0; i<NUMPROC; i++){
-		process_array[i]->state = STOP;
-	}
+//	int i;
+//	for(i=0; i<NUMPROC; i++){
+//		process_array[i]->state = STOP;
+//	}
+	memset(process_array, 0, 16*NUMPROC);
+
 }
 
 //set up the process
@@ -55,9 +57,9 @@ int create(void (*func)(void)){
 	//get the first stopped process, in the begginning will be first one
 	int i;
 	for(i=0; i<NUMPROC; i++){
-		if(process_array[i]->state == STOP){
+		if(process_array[i].state == STOP){
 			kprintf("NEXTPROCESS:%d *", i);
-			p = process_array[i];
+			p = &process_array[i];
 			processCount++;
 			break;
 		}

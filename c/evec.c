@@ -16,7 +16,7 @@ void initevec(void)
 {
 	int		i;
 
-        /* bzero( idt, sizeof( struct idt ) * 256 ); */
+	/* bzero( idt, sizeof( struct idt ) * 256 ); */
 	memset( idt, 0, sizeof( struct idt ) * 256 ); 
 
 	for (i=0; i<NID; ++i)
@@ -49,26 +49,26 @@ void set_evec(unsigned int xnum, unsigned long handler)
 }
 
 char *inames[17] = {
-	"divided by zero",
-	"debug exception",
-	"NMI interrupt",
-	"breakpoint",
-	"overflow",
-	"bounds check failed",
-	"invalid opcode",
-	"coprocessor not available",
-	"double fault",
-	"coprocessor segment overrun",
-	"invalid TSS",
-	"segment not present",
-	"stack fault",
-	"general protection violation",
-	"page fault",
-	"coprocessor error",
+		"divided by zero",
+		"debug exception",
+		"NMI interrupt",
+		"breakpoint",
+		"overflow",
+		"bounds check failed",
+		"invalid opcode",
+		"coprocessor not available",
+		"double fault",
+		"coprocessor segment overrun",
+		"invalid TSS",
+		"segment not present",
+		"stack fault",
+		"general protection violation",
+		"page fault",
+		"coprocessor error",
 };
 
 static long *fp; // This is the fp that is used in the asm
-                 // "instruction" within trap.
+// "instruction" within trap.
 
 /*------------------------------------------------------------------------
  * trap -- print some debugging info when a trap occurred 
@@ -80,17 +80,17 @@ static long *fp; // This is the fp that is used in the asm
 
 void trap(int inum)
 {
-  long		*sp;
+	long		*sp;
 
 	disable();
 
-	
+
 	/* The following copies the current value of the frame pointer into
-         * the global variable fp. What this means is that fp is pointing 
-         * to the current frame. 
-         */
+	 * the global variable fp. What this means is that fp is pointing
+	 * to the current frame.
+	 */
 	asm("movl	%ebp,fp");
-      
+
 	sp = fp;	/* eflags/CS/eip/ebp/regs/trap#/Xtrap/ebp */
 
 	kprintf("trap!\n");
@@ -101,13 +101,13 @@ void trap(int inum)
 	}
 
 	/* We are going to use the variable sp to walk the stack frame 
-         * to print out information with respect to regsiter values etc
-         * at the time the trap/exception occurred. 
+	 * to print out information with respect to regsiter values etc
+	 * at the time the trap/exception occurred.
 	 */
 	sp = sp + ELEMENTS_ON_STACK; 
 	kprintf("Address of sp %x value of sp %x\n", &sp, sp);
 	kprintf("eflags %X ", *sp); sp--;
-        kprintf("CS: %X ", *sp);    sp--;
+	kprintf("CS: %X ", *sp);    sp--;
 	kprintf("eip %X\n", *sp);   sp--;
 
 	if (inum == 8 || (inum >= 10 && inum <= 14)) {
@@ -127,5 +127,5 @@ void trap(int inum)
 	kprintf("edi %08X (%u)\n", *sp, *sp); sp--;
 
 	kprintf("\nHalting.....\n");
-        for(;;);
+	for(;;);
 }

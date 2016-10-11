@@ -81,6 +81,8 @@ void initproc( void )				/* The beginning */
    kprintf("\n\n");
    initProcessArray();
    create(light); //create the first process
+
+   contextinit();
    dispatch();
 
 

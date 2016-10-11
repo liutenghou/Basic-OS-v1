@@ -17,16 +17,19 @@ void dispatch() {
 	for (;;) {
 		process = next(); //get next ready process
 		request = contextswitch(process);
-		kprintf("b:");
+		kprintf(" backtod:");
 		switch (request) {
 		case (CREATE):
+			kprintf(" CREATE:");
 			create(process->firstFunction);
 			break;
 		case (YIELD):
+			kprintf(" YIELD:");
 			ready(process);
 			process = next();
 			break;
 		case (STOP):
+			kprintf(" STOP:");
 			cleanup(process);
 			process = next();
 			break;
@@ -47,10 +50,18 @@ void cleanup(struct pcb* p){
 //returns pointer to next ready process
 struct pcb* next(){
 	struct pcb* p;
-	//TODO: work on this next
+	//TODO: work on this next, make into linked list instead of array
 	//go through the process_array, look for next ready process
-	p = process_array[0];
-	kprintf("IN NEXT:");
+	int i;
+	for(i=0; i<PROCSIZE; i++){
+		if(process_array[i].state == READY){
+			p = &process_array[i];
+			break;
+		}
+	}
+	//TODO: error for no ready processes
+
+	kprintf(" IN NEXT: ");
 	kprintf("p->pid:%d * p->sanityCheck:%s *", p->pid, p->sanityCheck);
 
 	return p;
