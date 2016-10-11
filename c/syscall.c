@@ -6,7 +6,7 @@
 /* Your code goes here */
 
 
-int syscall(int call, ...){
+int syscall(void* call, ...){
 	int result = 1;
 
 	//TODO: put arguments in register

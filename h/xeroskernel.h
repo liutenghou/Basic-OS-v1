@@ -104,7 +104,7 @@ void contextinit(void);
 extern int create(void (*func)(void)); //create.c
 void light(void); //first process, user
 extern struct pcb* next(void);
-extern int syscall( int call, ... );
+extern int syscall( void* call, ... );
 
 
 /* Anything you add must be between the #define and this comment */
