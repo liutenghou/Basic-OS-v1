@@ -6,12 +6,12 @@
 /* Your code goes here */
 
 
-int syscall(int num, char* inst, ...){
+int syscall(int call, ...){
 	int result = 1;
 
 	//TODO: put arguments in register
 	__asm __volatile("\
-			movl %%eax, inst\n\
+			movl %%eax, __call\n\
 			int 49\n\
 			movl __result, %%eax\n\
 		"
@@ -25,13 +25,13 @@ int syscall(int num, char* inst, ...){
 
 
 extern unsigned int syscreate( void (*func)(void), int stack ){
-	return syscall(3, "CREATE", *func, stack);
+	return syscall(100, *func, stack);
 }
 
 
 extern void sysyield( void ){
-	syscall(1, "YEILD");
+	syscall(101);
 }
 extern void sysstop( void ){
-	syscall(1, "STOP");
+	syscall(0);
 }
