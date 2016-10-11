@@ -11,11 +11,9 @@ int syscall(int num, char* inst, ...){
 
 	//TODO: put arguments in register
 	__asm __volatile("\
-
-
-			movl %eax, inst
-			int 49
-			movl __result, %eax
+			movl %eax, inst\n\
+			int 49\n\
+			movl __result, %eax\n\
 		"
 		:
 		:
