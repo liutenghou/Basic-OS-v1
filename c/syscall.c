@@ -7,8 +7,8 @@
 
 
 int syscall(int call, ...){
-	int __attribute__((used)) result;
-	int __attribute__((used)) cat = call;
+	static int __attribute__((used)) result;
+	static int __attribute__((used)) cat = call;
 
 	//TODO: put arguments in register
 	__asm __volatile("\
