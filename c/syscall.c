@@ -7,7 +7,7 @@
 
 
 int syscall(int num, char* inst, ...){
-	int result;
+	int result = 1;
 
 	//TODO: put arguments in register
 	__asm __volatile("\
