@@ -6,12 +6,13 @@
 /* Your code goes here */
 
 
-int syscall(void* call, ...){
+int syscall(int call, ...){
 	int result = 1;
+	int cat = call;
 
 	//TODO: put arguments in register
 	__asm __volatile("\
-			movl %%eax, call\n\
+			movl %%eax, cat\n\
 			int 49\n\
 			movl result, %%eax\n\
 		"
