@@ -7,14 +7,15 @@
 
 
 int syscall(int call, ...){
-	static int __attribute__((used)) result;
-	static int __attribute__((used)) cat = call;
+	int* result;
+	int* cat = *call;
 
 	//TODO: put arguments in register
+	//asm volatile ("movl %0, %esp" : "g" (userstack));
 	__asm __volatile("\
-			movl %%eax, cat\n\
+			movl %%eax, (cat)\n\
 			int $49\n\
-			movl result, %%eax\n\
+			movl (result), %%eax\n\
 		"
 		:
 		:
