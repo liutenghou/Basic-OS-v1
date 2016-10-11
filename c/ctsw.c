@@ -16,6 +16,7 @@
 void _ISREntryPoint();
 static void *k_stack;
 static unsigned int ESP;
+static unsigned int EAX;
 
 
 //saves kernel state
@@ -26,10 +27,10 @@ static unsigned int ESP;
 //loads kernel state back to registers
 //returns to dispatcher to handle syscall
 int contextswitch(struct pcb* p){
-	kprintf("\nc:");
+	//kprintf("\nc:");
 
 	ESP = (unsigned int)p->esp;
-	kprintf("ESP:%d *", ESP);
+	//kprintf("ESP:%d *", ESP);
 	__asm __volatile("\
 			pushf \n\
 			pusha \n\
@@ -41,6 +42,7 @@ int contextswitch(struct pcb* p){
 		pusha \n\
 		movl %%esp, ESP \n\
 		movl k_stack, %%esp \n\
+		movl EAX, %%eax \n\
 		popa \n\
 		popf \n\
 		"
@@ -49,8 +51,8 @@ int contextswitch(struct pcb* p){
 		: "%eax"
 		);
 	p->esp = ESP;
-	kprintf(" END CS\n");
-	return YIELD;
+	kprintf(" cs->eax:%d ", EAX);
+	return EAX;
 }
 
 

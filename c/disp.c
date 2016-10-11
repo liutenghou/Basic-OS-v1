@@ -27,19 +27,19 @@ void dispatch() {
 
 		process = next(); //get next ready process
 		request = contextswitch(process);
-		kprintf(" backtod:");
+		//kprintf(" backtod:");
 		switch (request) {
 		case (CREATE):
 			kprintf(" CREATE:");
 			create(process->firstFunction);
 			break;
 		case (YIELD):
-			kprintf(" YIELD:");
+			//kprintf(" YIELD:");
 			ready(process);
 			process = next();
 			break;
 		case (STOP):
-			kprintf(" STOP:");
+			//kprintf(" STOP:");
 			cleanup(process);
 			process = next();
 			break;
@@ -77,8 +77,8 @@ struct pcb* next(){
 	}
 	//TODO: error for no ready processes
 
-	kprintf(" IN NEXT: ");
-	kprintf("p->pid:%d * p->sanityCheck:%s *", p->pid, p->sanityCheck);
+	//kprintf(" IN NEXT: ");
+	//kprintf("p->pid:%d * p->sanityCheck:%s *", p->pid, p->sanityCheck);
 
 	return p;
 }

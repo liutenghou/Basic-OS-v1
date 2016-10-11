@@ -5,26 +5,23 @@
 
 /* Your code goes here */
 
-//call: CREATE, YIELD, STOP
-//returns: pid of process
-
 static int result;
 static int callLocal;
+
+//call: CREATE, YIELD, STOP
+//returns: pid of process
 int syscall(int call, unsigned int numargs, char *sargs){
 	callLocal = call;
-
+		kprintf(" call: %d ", call);
 		//TODO: put arguments in register
 		//asm volatile ("movl %0, %esp" : "g" (userstack));
 		__asm __volatile("\
-				movl %%eax, callLocal\n\
+				movl %eax, callLocal\n\
 				int $49\n\
-				movl result, %%eax\n\
+				movl result, %eax\n\
 			"
-			:
-			:
-			: "%eax"
 			);
-
+		kprintf(" result: %d ", result);
 		return result;
 	return 0;
 }
