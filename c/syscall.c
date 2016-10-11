@@ -7,14 +7,14 @@
 
 
 int syscall(int call, ...){
-	int result = 1;
-	int cat = call;
+	int __attribute__((used)) result;
+	int __attribute__((used)) cat = call;
 
 	//TODO: put arguments in register
 	__asm __volatile("\
-			movl %%eax, _cat\n\
+			movl %%eax, cat\n\
 			int $49\n\
-			movl _result, %%eax\n\
+			movl result, %%eax\n\
 		"
 		:
 		:
