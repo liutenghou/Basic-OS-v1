@@ -6,7 +6,7 @@
 /* Your code goes here */
 
 
-unsigned int syscall(int num, char* inst, ...){
+int syscall(int num, char* inst, ...){
 	int result;
 
 	//TODO: put arguments in register
