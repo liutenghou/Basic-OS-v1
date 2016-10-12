@@ -134,3 +134,21 @@ void *kmalloc(int size){
 	return maxaddr;
 }
 
+//puts freed memory back into the free pool
+extern void kfree(void *ptr) {
+	//first check that ptr is valid
+	char *c = "pizzapizza";
+	struct memHeader *p = (struct memHeader*)ptr;
+	if (p->sanityCheck != c) {
+		return;
+	}
+	//add node into freenodes
+	struct memHeader *temp = memSlot;
+	while (temp->next != NULL) {
+		//kprintf("n:%dsize:%d|", nodeCount,temp->size);
+		temp = temp->next;
+	}
+	temp->next->next = p;
+
+}
+

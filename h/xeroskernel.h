@@ -91,6 +91,7 @@ extern struct pcb process_array[NUMPROC];
 
 extern char	*maxaddr;	/* max memory address (set in i386.c)	*/
 extern void kmeminit(void);
+extern void kfree(void *ptr);
 extern void *kmalloc(int size);
 extern void kfree(void *ptr);
 extern void printNodes(void);
