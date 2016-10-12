@@ -4,6 +4,7 @@
 #include <xeroskernel.h>
 
 /* Your code goes here */
+//done
 void producer(void);
 void consumer(void);
 
