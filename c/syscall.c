@@ -4,7 +4,9 @@
 #include <xeroskernel.h>
 /* Your code goes here */
 
-
+//syscall is called by sysxxx functions from user space
+//it saves values to registers (call and function)
+//then calls int 49, which is the entrypoint in the context switcher
 //call: CREATE, YIELD, STOP
 //returns: pid of process
 int syscall(int call, unsigned int numargs, void *funcptr){
@@ -24,7 +26,7 @@ int syscall(int call, unsigned int numargs, void *funcptr){
 			: "r" (call), "r" (function)	/*input operand*/
 			: "%eax"						/*clobbered register*/
 			);
-		//kprintf(" 1call: %d, result: %d, function:%d *", call, result, function);
+		//kprintf(" call: %d, result: %d, function:%d *", call, result, function);
 	return result;
 }
 

@@ -8,7 +8,8 @@ char *maxaddr;
 
 struct memHeader *memSlot;
 
-//Initialize mem
+//Initialize mem, two large nodes with hole in between.
+//only initialize free memory
 void kmeminit(void){
   //kprintf("\nINSIDE MEM MANAGER\n");
 
@@ -39,8 +40,11 @@ void printNodes(){
 	//kprintf("n:%dsize:%d|", nodeCount,temp->size);
 }
 
+
+
 //give set amount of free mem
-//NOTE: memory address returned is beginning of node, need to add 16
+//a new node is created at the end of given memory
+//then added to the existing free nodes.
 void *kmalloc(int size){
 
 	struct memHeader *temp = memSlot;

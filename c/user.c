@@ -13,6 +13,12 @@ void root(){
 	//no more using create()
 	syscreate(producer);
 	syscreate(consumer);
+	syscreate(producer);
+	syscreate(consumer);
+	syscreate(producer);
+	syscreate(consumer);
+	syscreate(producer);
+	syscreate(consumer);
 	int i;
 	for(;;){ //TODO: change to infinite later
 		sysyield();
@@ -24,6 +30,7 @@ void producer(void){
 	for(i=0; i<12; i++){
 		kprintf("Happy 101s ");
 	}
+	kprintf("\n");
 	sysstop();
 }
 
@@ -32,5 +39,6 @@ void consumer(void){
 	for(i=0; i<15; i++){
 		kprintf("Birthday UBC ");
 	}
+	kprintf("\n");
 	sysstop();
 }

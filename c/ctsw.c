@@ -54,7 +54,7 @@ int contextswitch(struct pcb* p){
 		);
 	p->function = (void (*)(void))func;
 	p->esp = (unsigned long*)ESP;
-	//kprintf(" 3cs->eax:%d, func:%d ", EAX, p->function);
+	//kprintf(" eax:%d, func:%d ", EAX, p->function);
 	return EAX;
 }
 

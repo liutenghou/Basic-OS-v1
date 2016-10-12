@@ -71,12 +71,8 @@ void initproc( void )				/* The beginning */
   // kprintf("memLocation: %d", memLocation3);
 //   long *memLocation4 = (long *)kmalloc(20000);
   // kprintf("memLocation: %d", memLocation4);
-  // long *memLocation5 = (long *)kmalloc(20000);
-  // kprintf("memLocation: %d", memLocation5);
-  // long *memLocation6 = (long *)kmalloc(200000);
-  // kprintf("memLocation: %d", memLocation6);
 
-   //TODO: the last thing init does is create the first user process, then call dispatch()
+   //the last thing init does is create the first user process, then call dispatch()
    //onto the dispatcher
    kprintf("\n\n");
    initProcessArray();

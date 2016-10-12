@@ -7,3 +7,78 @@ respect to how new lines and carriage returns are treated. Line widths
 are to be limited to 80 characters.
 
 
+Memory Manager Tests
+
+1) 
+- Test correct initialization of memory with kmeminit()
+
+- kmeminit initializes the two free pieces of memory (with hole in-between) as two nodes.
+The kprintf() statement in:
+mem.c: line 27
+
+- When uncommented, will show that the correct starting points for the 2 initialized free memory
+nodes are there. i.e. the nodes start at freemem and HOLEEND respectively.
+The kprintf() also prints the sizes of the two nodes, which should be all the
+available free memory. 
+
+2) 
+- Test kmalloc()
+
+- kmalloc is tested with kprinf() statements at:
+init.c: line 66 - line 73
+
+- These lines allocate different amounts of space and the print statement shows that the
+correct memory location is returned to us. 
+
+Also in:
+mem.c: line 77
+There is a kprintf() which shows that a new node has been created for the existing free
+space, and that temp(the old node) is returned as free space.
+
+
+Process Management Tests	
+
+3) 
+- Test syscreate in root()
+
+- syscreate in root is tested in:
+user.c: lines 16 - 21
+
+- Three more pairs of producer and consumer are created, and when these lines are
+uncommented, we see that these correctly produce the print statements.
+
+4)
+- Test contextswitcher receives value from syscall
+
+- syscall sends in the call type (STOP, YIELD, READY), and also the function pointer
+if there is one in registers eax and edx respectively. This test shows that the correct values
+are passed from syscall to the contextswitcher
+
+- location:
+syscall.c: line 29
+ctsw.c: line 57
+
+
+OVERALL TESTING METHODOLOGY
+This kernel was tested iteratively, with many kprintf() statements at each stage.
+The stages involved were:
+1) working on kmeminit
+2) kmalloc
+3) dispatcher
+4) contextswitcher
+5) user process
+6) syscalls
+
+kmeminit and kmalloc were relatively straight forward.
+The dispatcher and contextswitcher code was initially taken from the slides,
+then modified as need arose.
+It was very difficult to test the dispatcher and contextswitcher, because until
+we knew how to create a user process, and also have syscalls to be able to run
+the second half of the contextswitcher, it was impossible to know if the dispatcher
+and context switcher where correct or working properly.
+When the user process and syscall could finally be started, it was then possible
+to debug the dispatcher and especially the context switcher, which was very difficult
+because it was in assembly, and understanding how to pass arguments form syscall to
+the contextswitcher took a long time.
+
+
