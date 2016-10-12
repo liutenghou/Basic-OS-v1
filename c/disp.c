@@ -14,10 +14,13 @@ int request = 0;
 void dispatch() {
 
 	kprintf("d:");
-	for (;;) {
+	for (process = next();process;) {
 
-		process = next(); //get next ready process
-
+//		process = next(); //get next ready process
+//		if(process == NULL){
+//			kprintf("no more processes");
+//			break;
+//		}
 		request = contextswitch(process);
 		//kprintf(" backtod:");
 		switch (request) {
@@ -46,9 +49,9 @@ void dispatch() {
 //add current process p to ready queue,
 int pid = 0;
 void ready(struct pcb* p){
-//make process ready
-//	readyQueue = readyQueue->next;
-//	readyQueue->state = READY;
+	//make process ready
+	readyQueue = readyQueue->next;
+	readyQueue->state = READY;
 	kprintf("* readyQpid:%d *", readyQueue->pid);
 
 	struct pcb* temp = readyQueue;
@@ -64,6 +67,8 @@ void ready(struct pcb* p){
 void cleanup(struct pcb* p){
 	//cleanup process
 	kprintf("incleanup");
+	p->state = STOP;
+
 }
 
 //returns pointer to next ready process

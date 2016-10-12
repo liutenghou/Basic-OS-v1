@@ -24,7 +24,7 @@ int syscall(int call, unsigned int numargs, void *funcptr){
 			: "r" (call), "r" (function)	/*input operand*/
 			: "%eax"						/*clobbered register*/
 			);
-		kprintf(" 1result: %d, function:%d *", result, function);
+		kprintf(" 1call: %d, result: %d, function:%d *", call, result, function);
 	return result;
 }
 
