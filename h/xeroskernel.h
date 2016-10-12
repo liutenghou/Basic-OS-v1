@@ -89,7 +89,6 @@ extern struct pcb process_array[NUMPROC];
 #define STOP 0
 #define READY 102
 
-
 extern char	*maxaddr;	/* max memory address (set in i386.c)	*/
 extern void kmeminit(void);
 extern void *kmalloc(int size);
@@ -101,6 +100,8 @@ extern void cleanup(struct pcb* p);
 extern int contextswitch(struct pcb* p);
 void initProcessArray(void);
 void contextinit(void);
+struct pcb *readyQueue;
+void addToReadyQueue(struct pcb *p);
 extern int create(void (*func)(void)); //create.c
 void root(void); //first process, user
 extern int syscall(int call, unsigned int numargs, void *funcptr); //syscall.c

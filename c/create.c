@@ -7,6 +7,8 @@
 struct pcb process_array[NUMPROC]; //global, goes in kernel stack
 int processCount = 0;
 
+void addToReadyQueue(struct pcb *p);
+
 //initialize the process_array
 void initProcessArray(void){
 //	int i;
@@ -60,7 +62,7 @@ int create(void (*func)(void)){
 		if(process_array[i].state == STOP){
 			kprintf("NEXTPROCESS:%d *", i);
 			p = &process_array[i];
-			processCount++;
+			processCount=processCount+1;
 			break;
 		}
 	}
@@ -68,13 +70,32 @@ int create(void (*func)(void)){
 	p->pid = processCount;
 	p->sanityCheck = "nemo";
 	p->esp = (unsigned long*)cf;
-	kprintf("pesp:%d *", p->esp);
+	kprintf(" pesp:%d * ppid:%d *", p->esp, p->pid);
 	p->state = READY; //stopped, ready, waiting, running, setc
 	p->parent_pid = 0; //not needed?
 	p->ret = NULL; //return address
 		//struct CPU cpu_state;
 	p->next = NULL;
 	p->function; //first function for the process
+
+	//add to ready queue
+	addToReadyQueue(p);
+
+
 	//put the context frame at the end
 	return p->pid;
+}
+
+void addToReadyQueue(struct pcb *p){
+	if (readyQueue == NULL){
+		readyQueue = p;
+		kprintf("* ADDTOREADYQUEUEp:%d *", p);
+	}else{
+		struct pcb *temp = readyQueue;
+		while(temp->next != NULL){
+			kprintf("* findspace *");
+			temp = temp->next;
+		}
+		temp->next = p;
+	}
 }

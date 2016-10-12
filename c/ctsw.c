@@ -17,6 +17,7 @@ void _ISREntryPoint();
 static void *k_stack;
 static unsigned int ESP;
 static unsigned int EAX;
+static void (*func)(void);
 
 
 //saves kernel state
@@ -43,6 +44,7 @@ int contextswitch(struct pcb* p){
 		movl %%esp, ESP \n\
 		movl k_stack, %%esp \n\
 		movl %%eax, EAX \n\
+		movl %%edx, func \n\
 		popa \n\
 		popf \n\
 		"
@@ -50,8 +52,9 @@ int contextswitch(struct pcb* p){
 		:
 		: "%eax"
 		);
+	p->function = (void (*)(void))func;
 	p->esp = (unsigned long*)ESP;
-	kprintf(" 3cs->eax:%d ", EAX);
+	kprintf(" 3cs->eax:%d, func:%d ", EAX, p->function);
 	return EAX;
 }
 

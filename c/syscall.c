@@ -8,7 +8,7 @@
 //call: CREATE, YIELD, STOP
 //returns: pid of process
 int syscall(int call, unsigned int numargs, void *funcptr){
-	int *function;
+	int *function = NULL;
 	if(numargs == 1){
 		function = (void (*)(void))funcptr;
 	}
@@ -25,15 +25,13 @@ int syscall(int call, unsigned int numargs, void *funcptr){
 			: "%eax"						/*clobbered register*/
 			);
 		kprintf(" 1result: %d, function:%d *", result, function);
-		return result;
-	return 0;
+	return result;
 }
 
 unsigned int syscreate( void (*func)(void)){
 	//note: stack size is always PROCSIZE
 	kprintf(" syscreate:%d ", func);
-	syscall(CREATE, 1, (void*)func);
-	return 0;
+	return syscall(CREATE, 1, (void*)func);
 }
 
 //yield to next ready process
