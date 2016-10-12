@@ -17,11 +17,12 @@ void dispatch() {
 	for (;;) {
 
 		process = next(); //get next ready process
+
 		request = contextswitch(process);
 		//kprintf(" backtod:");
 		switch (request) {
 		case (CREATE):
-			kprintf(" 4CREATE:p->f:%d, p->pid:%d *", process->function, process->pid);
+			kprintf(" 4CREATE:");
 			create(process->function);
 			break;
 		case (YIELD):
@@ -43,16 +44,18 @@ void dispatch() {
 //--> kernel space
 
 //add current process p to ready queue,
-//remove next process on ready queue to run
+int pid = 0;
 void ready(struct pcb* p){
-	//make process ready
-	readyQueue = readyQueue->next;
-	readyQueue->state = READY;
+//make process ready
+//	readyQueue = readyQueue->next;
+//	readyQueue->state = READY;
+	kprintf("* readyQpid:%d *", readyQueue->pid);
 
 	struct pcb* temp = readyQueue;
 	while(temp->next != NULL){
 		temp = temp->next;
 	}
+	temp->state = READY;
 	temp->next = p;
 }
 
@@ -60,30 +63,21 @@ void ready(struct pcb* p){
 //remove next process on ready queue to run
 void cleanup(struct pcb* p){
 	//cleanup process
+	kprintf("incleanup");
 }
 
 //returns pointer to next ready process
 struct pcb* next(){
 	struct pcb* temp = readyQueue;
 	kprintf("* temp:%d *", temp);
-	//TODO: work on this next, make into linked list instead of array
-	//go through the process_array, look for next ready process
-//	int i;
-//	for(i=0; i<PROCSIZE; i++){
-//		if(process_array[i].state == READY){
-//			p = &process_array[i];
-//			break;
-//		}
-//	}
-	//TODO: error for no ready processes
-	while(temp->next != NULL){
-		if(temp->state == READY){
-			break;
-		}
-	}
 
-	//kprintf(" IN NEXT: ");
-	//kprintf("p->pid:%d * p->sanityCheck:%s *", p->pid, p->sanityCheck);
+	if(readyQueue->next == NULL){
+		return readyQueue; //no more processes
+	}
+	readyQueue = readyQueue->next;
+
+	kprintf(" IN NEXT: ");
+	kprintf(" p->pid:%d * p->sanityCheck:%s *", temp->pid, temp->sanityCheck);
 
 	return temp;
 }

@@ -42,9 +42,9 @@ int create(void (*func)(void)){
 	cf->edi = 0; //gen purpose
 	cf->esi = 0; //gen purpose
 	//start at the bottom
-	cf->ebp = cf+1; //set to esp at the start of function, local vars relative to here
-	cf->esp = cf+1; //current top location within stack segment
-	kprintf("cf+1:%d *", cf->esp);
+	cf->ebp = cf; //set to esp at the start of function, local vars relative to here
+	cf->esp = cf; //current top location within stack segment
+	kprintf("cf:%d *", cf->esp);
 	//
 	cf->ebx = 0; //gen purpose
 	cf->edx = 0; //gen purpose
