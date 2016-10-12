@@ -13,7 +13,7 @@ int syscall(int call, unsigned int numargs, void *funcptr){
 		function = (void (*)(void))funcptr;
 	}
 	int result;
-		kprintf(" 0call: %d ", call);
+		//kprintf(" 0call: %d ", call);
 		//TODO: put arguments in register
 		//asm volatile ("movl %0, %esp" : "g" (userstack));
 		__asm __volatile("movl %1, %%eax;"
@@ -24,13 +24,13 @@ int syscall(int call, unsigned int numargs, void *funcptr){
 			: "r" (call), "r" (function)	/*input operand*/
 			: "%eax"						/*clobbered register*/
 			);
-		kprintf(" 1call: %d, result: %d, function:%d *", call, result, function);
+		//kprintf(" 1call: %d, result: %d, function:%d *", call, result, function);
 	return result;
 }
 
 unsigned int syscreate( void (*func)(void)){
 	//note: stack size is always PROCSIZE
-	kprintf(" syscreate:%d ", func);
+	//kprintf(" syscreate:%d ", func);
 	return syscall(CREATE, 1, (void*)func);
 }
 

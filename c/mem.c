@@ -10,7 +10,7 @@ struct memHeader *memSlot;
 
 //Initialize mem
 void kmeminit(void){
-  kprintf("\nINSIDE MEM MANAGER\n");
+  //kprintf("\nINSIDE MEM MANAGER\n");
 
   //set free memory linked list
   memSlot = (struct memHeader *)freemem;
@@ -24,7 +24,7 @@ void kmeminit(void){
   memSlot->next->size = (unsigned long)(maxaddr - HOLEEND);
   memSlot->next->sanityCheck = "pizzapizza";
 
-  kprintf("freemem: %d, memSlotSize: %d, memSlotNextSize: %d, memSlotNext: %d\n", freemem, memSlot->size, memSlot->next->size, memSlot->next);
+  //kprintf("freemem: %d, memSlotSize: %d, memSlotNextSize: %d, memSlotNext: %d\n", freemem, memSlot->size, memSlot->next->size, memSlot->next);
 }
 
 //shows free mem nodes
@@ -32,11 +32,11 @@ void printNodes(){
 	struct memHeader *temp = memSlot;
 	int nodeCount = 0;
 	while(temp->next != NULL){
-		kprintf("n:%dsize:%d|", nodeCount,temp->size);
+		//kprintf("n:%dsize:%d|", nodeCount,temp->size);
 		temp=temp->next;
 		nodeCount++;
 	}
-	kprintf("n:%dsize:%d|", nodeCount,temp->size);
+	//kprintf("n:%dsize:%d|", nodeCount,temp->size);
 }
 
 //give set amount of free mem
@@ -46,24 +46,24 @@ void *kmalloc(int size){
 	struct memHeader *temp = memSlot;
 	// kprintf("temp:%d.memSlot:%d.",temp,memSlot);
 
-	kprintf("RequestedSize:%d*",size);
+	//kprintf("RequestedSize:%d*",size);
 	//convert sizeWithHeader to 16 bit boundary
 	long sizeIn16 = 1 + (size/16) + ((size%16)?1:0); //convert to count of 16 bits
 	long sizeWithHeader = sizeIn16*16; //converts back to bits and adds header size
-	kprintf("sizeWithHeader:%d*",sizeWithHeader);
+	//kprintf("sizeWithHeader:%d*",sizeWithHeader);
 
 //	kprintf("sizeWithHeader:%d",sizeWithHeader);
 	//iterate to find node with enough RAM
 	while(temp->next != NULL){ 
 //		kprintf("*temp->size:%d*sizeWithHeader:%d*", temp->size, sizeWithHeader);
 		if(temp->size >= sizeWithHeader){
-			kprintf(">");
+			//kprintf(">");
 			break; 
 		}
 		//move pointer if mem less than size
 		temp = temp->next;
-		kprintf("nextTempsize:%d*temp:%d*",temp->size,temp);
-		kprintf("()");
+		//kprintf("nextTempsize:%d*temp:%d*",temp->size,temp);
+
 	}
 	if(temp == NULL){
 		return maxaddr; //error, not enough RAM
@@ -72,11 +72,10 @@ void *kmalloc(int size){
 	//give portion of node if there is enough space for another node
 	if((temp->size - sizeWithHeader)>20){ //minimum 4bytes left over -> 16+4?
 		struct memHeader *newNode = (struct memHeader *)(temp + sizeIn16); //new node with free RAM
-		kprintf("<temp:%d*newNode:%d*>",temp,newNode);
+		//kprintf("<temp:%d*newNode:%d*>",temp,newNode);
 
-		//TODO: fix logic
 		if(temp->prev == NULL){ //if head
-			kprintf("HEAD");
+			//kprintf("HEAD");
 			temp->next->prev = newNode;
 
 			newNode->prev = NULL;
@@ -91,7 +90,7 @@ void *kmalloc(int size){
 
 			return temp;
 		}else if(temp->next == NULL){ //tail
-			kprintf("TAIL");
+			//kprintf("TAIL");
 			temp->prev->next = newNode;
 
 			//kprintf("BROKE1 newNode:%d*tempPrevNext:%d",newNode,temp->prev->next);
@@ -109,7 +108,7 @@ void *kmalloc(int size){
 
 			return temp;
 		}else{ //middle node
-			kprintf("MIDDLE");
+			//kprintf("MIDDLE");
 			temp->next->prev = newNode;
 			temp->prev->next = newNode;
 

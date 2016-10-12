@@ -22,7 +22,7 @@ void initProcessArray(void){
 //set up the process
 //process takes a function pointer for first function
 int create(void (*func)(void)){
-	kprintf(" CREATE ");
+	//kprintf(" CREATE ");
 	//a process consists of a context frame, pcb
 	struct pcb *p;
 	struct context_frame *cf;
@@ -33,10 +33,10 @@ int create(void (*func)(void)){
 	if(mh == maxaddr){
 		return -1;
 	}
-	kprintf("check:%s", mh->sanityCheck);
+	//kprintf("check:%s", mh->sanityCheck);
 	cf = (unsigned char*)mh + PROCSIZE; //convert to unsigned char for adding 1bit
 	cf = (struct context_frame*)(cf-1); //subtracts size of cf = 11*4 = 44
-	kprintf("cf:%d* mh:%d* PROCSIZE:%d* ", cf, mh, PROCSIZE);
+	//kprintf("cf:%d* mh:%d* PROCSIZE:%d* ", cf, mh, PROCSIZE);
 
 	//set initial values for cf
 	cf->edi = 0; //gen purpose
@@ -44,7 +44,7 @@ int create(void (*func)(void)){
 	//start at the bottom
 	cf->ebp = cf; //set to esp at the start of function, local vars relative to here
 	cf->esp = cf; //current top location within stack segment
-	kprintf("cf:%d *", cf->esp);
+	//kprintf("cf:%d *", cf->esp);
 	//
 	cf->ebx = 0; //gen purpose
 	cf->edx = 0; //gen purpose
@@ -54,13 +54,13 @@ int create(void (*func)(void)){
 	cf->iret_cs = getCS();
 	cf->eflags = 0;
 
-	kprintf("getCS():%d *func: %d *", cf->iret_cs, func);
+	//kprintf("getCS():%d *func: %d *", cf->iret_cs, func);
 
 	//get the first stopped process, in the begginning will be first one
 	int i;
 	for(i=0; i<NUMPROC; i++){
 		if(process_array[i].state == STOP){
-			kprintf("NEXTPROCESS:%d *", i);
+			//kprintf("NEXTPROCESS:%d *", i);
 			p = &process_array[i];
 			processCount=processCount+1;
 			break;
@@ -70,7 +70,7 @@ int create(void (*func)(void)){
 	p->pid = processCount;
 	p->sanityCheck = "nemo";
 	p->esp = (unsigned long*)cf;
-	kprintf(" pesp:%d * ppid:%d *", p->esp, p->pid);
+	//kprintf(" pesp:%d * ppid:%d *", p->esp, p->pid);
 	p->state = READY; //stopped, ready, waiting, running, setc
 	p->parent_pid = 0; //not needed?
 	p->ret = NULL; //return address
@@ -89,11 +89,11 @@ int create(void (*func)(void)){
 void addToReadyQueue(struct pcb *p){
 	if (readyQueue == NULL){
 		readyQueue = p;
-		kprintf("* ADDTOREADYQUEUEp:%d *", p);
+		//kprintf("* ADDTOREADYQUEUEp:%d *", p);
 	}else{
 		struct pcb *temp = readyQueue;
 		while(temp->next != NULL){
-			kprintf("* findspace *");
+			//kprintf("* findspace *");
 			temp = temp->next;
 		}
 		temp->next = p;

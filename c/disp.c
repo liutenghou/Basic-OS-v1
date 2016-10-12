@@ -6,35 +6,29 @@
 /* Your code goes here */
 // note pcb struct in xeroshernel.h
 // kernel space
-
 struct pcb *process;
 struct pcb *blockedQueue;
 int request = 0;
 
 void dispatch() {
 
-	kprintf("d:");
+	//kprintf("d:");
 	for (process = next();process;) {
 
-//		process = next(); //get next ready process
-//		if(process == NULL){
-//			kprintf("no more processes");
-//			break;
-//		}
 		request = contextswitch(process);
 		//kprintf(" backtod:");
 		switch (request) {
 		case (CREATE):
-			kprintf(" 4CREATE:");
+			//kprintf(" 4CREATE:");
 			create(process->function);
 			break;
 		case (YIELD):
-			kprintf(" 2YIELD:");
+			//kprintf(" 2YIELD:");
 			ready(process);
 			process = next();
 			break;
 		case (STOP):
-			kprintf(" STOP:");
+			//kprintf(" STOP:");
 			cleanup(process);
 			process = next();
 			break;
@@ -52,7 +46,7 @@ void ready(struct pcb* p){
 	//make process ready
 	readyQueue = readyQueue->next;
 	readyQueue->state = READY;
-	kprintf("* readyQpid:%d *", readyQueue->pid);
+	//kprintf("* readyQpid:%d *", readyQueue->pid);
 
 	struct pcb* temp = readyQueue;
 	while(temp->next != NULL){
@@ -66,7 +60,7 @@ void ready(struct pcb* p){
 //remove next process on ready queue to run
 void cleanup(struct pcb* p){
 	//cleanup process
-	kprintf("incleanup");
+	//kprintf("incleanup");
 	p->state = STOP;
 
 }
@@ -74,15 +68,15 @@ void cleanup(struct pcb* p){
 //returns pointer to next ready process
 struct pcb* next(){
 	struct pcb* temp = readyQueue;
-	kprintf("* temp:%d *", temp);
+//	kprintf("* temp:%d *", temp);
 
 	if(readyQueue->next == NULL){
 		return readyQueue; //no more processes
 	}
 	readyQueue = readyQueue->next;
 
-	kprintf(" IN NEXT: ");
-	kprintf(" p->pid:%d * p->sanityCheck:%s *", temp->pid, temp->sanityCheck);
+//	kprintf(" IN NEXT: ");
+//	kprintf(" p->pid:%d * p->sanityCheck:%s *", temp->pid, temp->sanityCheck);
 
 	return temp;
 }

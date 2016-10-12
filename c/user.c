@@ -9,7 +9,7 @@ void consumer(void);
 
 //first process
 void root(){
-	kprintf("Hello, World!"); //I can't believe this is printing
+	kprintf("\nHello, World!\n"); //I can't believe this is printing
 	//no more using create()
 	syscreate(producer);
 	syscreate(consumer);
@@ -22,7 +22,7 @@ void root(){
 void producer(void){
 	int i;
 	for(i=0; i<12; i++){
-		kprintf("Happy 101s");
+		kprintf("Happy 101s ");
 	}
 	sysstop();
 }
@@ -30,7 +30,7 @@ void producer(void){
 void consumer(void){
 	int i;
 	for(i=0; i<15; i++){
-		kprintf("Birthday UBC");
+		kprintf("Birthday UBC ");
 	}
 	sysstop();
 }

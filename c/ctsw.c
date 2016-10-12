@@ -54,13 +54,13 @@ int contextswitch(struct pcb* p){
 		);
 	p->function = (void (*)(void))func;
 	p->esp = (unsigned long*)ESP;
-	kprintf(" 3cs->eax:%d, func:%d ", EAX, p->function);
+	//kprintf(" 3cs->eax:%d, func:%d ", EAX, p->function);
 	return EAX;
 }
 
 
 //contextinit() initializes the context switcher and sets the entrypoint for contextswitch in the IDT
 void contextinit(void){
-	kprintf(" INITCONTEXT ");
+	//kprintf(" INITCONTEXT ");
 	set_evec(49, (int)_ISREntryPoint);
 }
