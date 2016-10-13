@@ -3,3 +3,9 @@ assignment. If you know something doesn't work or you assignment is incomplete d
 it here so that the markers don't waste time trying to figure out if there is 
 some sort of build problem or issue when it is simply the case that things aren't
 working.
+
+1)
+To test kmalloc(), it is required to wrap the kmalloc function in an
+if statement to check if the return value is -1, which would indicate an error.
+In an actual function (not in testing), when kmalloc returns a -1, we
+exit the caller also.

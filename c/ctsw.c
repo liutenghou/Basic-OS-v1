@@ -62,5 +62,5 @@ int contextswitch(struct pcb* p){
 //contextinit() initializes the context switcher and sets the entrypoint for contextswitch in the IDT
 void contextinit(void){
 	//kprintf(" INITCONTEXT ");
-	set_evec(49, (int)_ISREntryPoint);
+	set_evec(CSENTRY, (int)_ISREntryPoint);
 }

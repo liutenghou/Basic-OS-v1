@@ -5,14 +5,13 @@
 #include <i386.h>
 extern long freemem;
 char *maxaddr;
+int returnErr = -1;
 
 struct memHeader *memSlot;
 
 //Initialize mem, two large nodes with hole in between.
 //only initialize free memory
 void kmeminit(void){
-  //kprintf("\nINSIDE MEM MANAGER\n");
-
   //set free memory linked list
   memSlot = (struct memHeader *)freemem;
   memSlot->size = HOLESTART-freemem;
@@ -47,6 +46,12 @@ void printNodes(){
 //then added to the existing free nodes.
 void* kmalloc(int size){
 
+	//asking too much
+	if(size>2531327){
+		return -1;
+	}
+
+	int *returnVal = &returnErr;
 	struct memHeader *temp = memSlot;
 	// kprintf("temp:%d.memSlot:%d.",temp,memSlot);
 
@@ -56,21 +61,20 @@ void* kmalloc(int size){
 	long sizeWithHeader = sizeIn16*16; //converts back to bits and adds header size
 	//kprintf("sizeWithHeader:%d*",sizeWithHeader);
 
-//	kprintf("sizeWithHeader:%d",sizeWithHeader);
 	//iterate to find node with enough RAM
 	while(temp->next != NULL){ 
-//		kprintf("*temp->size:%d*sizeWithHeader:%d*", temp->size, sizeWithHeader);
+		//kprintf("*temp->size:%d*sizeWithHeader:%d*", temp->size, sizeWithHeader);
 		if(temp->size >= sizeWithHeader){
 			//kprintf(">");
 			break; 
+		}
+		if((temp->next == NULL) && (temp->size<sizeWithHeader)){
+			return returnVal; //not enough RAM
 		}
 		//move pointer if mem less than size
 		temp = temp->next;
 		//kprintf("nextTempsize:%d*temp:%d*",temp->size,temp);
 
-	}
-	if(temp == NULL){
-		return maxaddr; //error, not enough RAM
 	}
 
 	//give portion of node if there is enough space for another node
@@ -94,13 +98,10 @@ void* kmalloc(int size){
 
 			return temp;
 		}else if(temp->next == NULL){ //tail
-			//kprintf("TAIL");
 			temp->prev->next = newNode;
 
-			//kprintf("BROKE1 newNode:%d*tempPrevNext:%d",newNode,temp->prev->next);
 			newNode->next = NULL;
 
-//			kprintf("BROKE2");
 			newNode->prev = temp->prev;
 			newNode->size = (temp->size) - sizeWithHeader;
 			newNode->sanityCheck = "pizzapizza";
@@ -112,7 +113,6 @@ void* kmalloc(int size){
 
 			return temp;
 		}else{ //middle node
-			//kprintf("MIDDLE");
 			temp->next->prev = newNode;
 			temp->prev->next = newNode;
 
@@ -128,10 +128,10 @@ void* kmalloc(int size){
 			return temp;
 		}
 	}else{ //give the whole node
-		return maxaddr;
+		return -1;
 	}
 
-	return maxaddr; //error
+	return -1; //error
 }
 
 //puts freed memory back into the free pool
@@ -140,6 +140,7 @@ extern void kfree(void *ptr) {
 	char *c = "pizzapizza";
 	struct memHeader *p = (struct memHeader*)ptr;
 	if (p->sanityCheck != c) {
+		kprintf(" invalid memory header\n");
 		return;
 	}
 	//add node into freenodes
@@ -149,6 +150,6 @@ extern void kfree(void *ptr) {
 		temp = temp->next;
 	}
 	temp->next->next = p;
-
+	kprintf(" sucessfully readded mem\n");
 }
 

@@ -88,6 +88,7 @@ extern struct pcb process_array[NUMPROC];
 #define YIELD 131
 #define STOP 0
 #define READY 102
+#define CSENTRY 49
 
 extern char	*maxaddr;	/* max memory address (set in i386.c)	*/
 extern void kmeminit(void);

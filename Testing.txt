@@ -33,24 +33,37 @@ freemem: 43328, memSlotSize: 612032, memSlotNextSize: 2531327, memSlotNext: 1662
 - Test kmalloc()
 
 - kmalloc is tested with kprinf() statements at:
-init.c: line 66 - line 73
+init.c: line 66 - line 74
 
 input:
-struct memHeader *memLocation = (struct memHeader *)kmalloc(16);
-kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation, memLocation->sanityCheck, memLocation->size);
-struct memHeader *memLocation2 = (struct memHeader *)kmalloc(20);
-kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation2, memLocation2->sanityCheck, memLocation2->size);
-struct memHeader *memLocation3 = (struct memHeader *)kmalloc(1000000);
-kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation3, memLocation3->sanityCheck, memLocation3->size);
-struct memHeader *memLocation4 = (struct memHeader *)kmalloc(20000);
-kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation4, memLocation4->sanityCheck, memLocation4->size);
+  struct memHeader *memLocation = (struct memHeader *)kmalloc(16);
+  if(memLocation != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation, memLocation->sanityCheck, memLocation->size);
+  kfree(memLocation);
+  kfree(123);
+  struct memHeader *memLocation2 = (struct memHeader *)kmalloc(20);
+  if(memLocation2 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation2, memLocation2->sanityCheck, memLocation2->size);
+  struct memHeader *memLocation3 = (struct memHeader *)kmalloc(1000000);
+  if(memLocation3 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation3, memLocation3->sanityCheck, memLocation3->size);
+  struct memHeader *memLocation4 = (struct memHeader *)kmalloc(20000);
+  if(memLocation4 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation4, memLocation4->sanityCheck, memLocation4->size);
+  struct memHeader *memLocation5 = (struct memHeader *)kmalloc(2000000000);
+  if(memLocation5 != -1)kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation5, memLocation5->sanityCheck, memLocation5->size);
 
 - These lines allocate different amounts of space and the print statement shows that the
 correct memory location is returned to us. The sanityCheck shows that the value given to us
-is a memHeader.
+is a memHeader. The if statement ensures that the return value is not -1 (error). The last
+kmalloc requests a large amount of RAM, but the if statement check protect us from 
+an exception. This also test readding the memory to the free list with kfree(),
+and test giving kfree an invalid input.
+Note that: 
+To test kmalloc(), it is required to wrap the kmalloc function in an
+if statement to check if the return value is -1, which would indicate an error.
+In an actual function (not in testing), when kmalloc returns a -1, we
+exit the caller also with error.
+
 
 Also in:
-mem.c: line 77
+mem.c: line 83
 There is a kprintf() which shows that a new node has been created for the existing free
 space, and that temp(the old node) is returned as free space.
 intput:
@@ -58,6 +71,8 @@ kprintf("<temp:%d*newNode:%d*>",temp,newNode);
 
 sample output:
 <temp:43328*newNode:43360*>memLocation: 43328, sanityCheck:pizzapizza, size:16
+ sucessfully readded mem
+ invalid memory header
 <temp:43360*newNode:43408*>memLocation: 43360, sanityCheck:pizzapizza, size:32
 <temp:1662976*newNode:2662992*>memLocation: 1662976, sanityCheck:pizzapizza, siz
 e:1000000

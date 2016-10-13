@@ -20,16 +20,18 @@ int syscall(int call, unsigned int numargs, void *funcptr){
 		//asm volatile ("movl %0, %esp" : "g" (userstack));
 		__asm __volatile("movl %1, %%eax;"
 						"movl %2, %%edx;"
-						"int $49;"
+						"int %3;"
 						"movl %%eax, %0;"
 			: "=r" (result)					/*output operand*/
-			: "r" (call), "r" (function)	/*input operand*/
+			: "r" (call), "r" (function), "i" (CSENTRY)	/*input operand*/
 			: "%eax"						/*clobbered register*/
 			);
 		//kprintf("<syscall call: %d, result: %d, function:%d >", call, result, function);
 	return result;
 }
 
+//called in user space to create process
+//arguments: function pointer for process
 unsigned int syscreate( void (*func)(void)){
 	//note: stack size is always PROCSIZE
 	//kprintf(" syscreate:%d ", func);

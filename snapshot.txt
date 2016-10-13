@@ -1,24 +1,24 @@
-py 101s Happy 101s Happy 101s Happy 101s Happy 101s
-Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
-rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
-hday UBC Birthday UBC Birthday UBC
-Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
-py 101s Happy 101s Happy 101s Happy 101s Happy 101s
-Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
-rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
-hday UBC Birthday UBC Birthday UBC
-Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
-py 101s Happy 101s Happy 101s Happy 101s Happy 101s
-Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
-rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
-hday UBC Birthday UBC Birthday UBC
-Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
-py 101s Happy 101s Happy 101s Happy 101s Happy 101s
-Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
-rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
-hday UBC Birthday UBC Birthday UBC
-Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
-py 101s Happy 101s Happy 101s Happy 101s Happy 101s
+
+This is the number -69 when printed signed -69 unsigned 4294967227 hex ffffffbb
+and a string Hello.
+      Sample printing of 1024 in signed 1024, unsigned 1024 and hex 400.
+
+
+<temp:43328*newNode:43360*>memLocation: 43328, sanityCheck:pizzapizza, size:16
+ sucessfully readded mem
+ invalid memory header
+<temp:43360*newNode:43408*>memLocation: 43360, sanityCheck:pizzapizza, size:32
+<temp:1662976*newNode:2662992*>memLocation: 1662976, sanityCheck:pizzapizza, siz
+e:1000000
+<temp:43408*newNode:63424*>memLocation: 43408, sanityCheck:pizzapizza, size:2000
+0
+
+
+<temp:63424*newNode:71632*>
+Hello, World!
+<temp:71632*newNode:79840*><temp:79840*newNode:88048*>Happy 101s Happy 101s Happ
+y 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 1
+01s Happy 101s Happy 101s
 Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
 rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
 hday UBC Birthday UBC Birthday UBC

@@ -30,8 +30,8 @@ int create(void (*func)(void)){
 	unsigned int pid;
 
 	mh = kmalloc(PROCSIZE);
-	if(mh == maxaddr){
-		return -1;
+	if(mh == -1){
+		return -1; //error on kmalloc
 	}
 	//kprintf("check:%s", mh->sanityCheck);
 	cf = (unsigned char*)mh + PROCSIZE; //convert to unsigned char for adding 1bit
