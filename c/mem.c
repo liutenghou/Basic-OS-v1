@@ -32,11 +32,9 @@ void printNodes(){
 	struct memHeader *temp = memSlot;
 	int nodeCount = 0;
 	while(temp->next != NULL){
-		//kprintf("n:%dsize:%d|", nodeCount,temp->size);
 		temp=temp->next;
 		nodeCount++;
 	}
-	//kprintf("n:%dsize:%d|", nodeCount,temp->size);
 }
 
 
@@ -53,19 +51,13 @@ void* kmalloc(int size){
 
 	int *returnVal = &returnErr;
 	struct memHeader *temp = memSlot;
-	// kprintf("temp:%d.memSlot:%d.",temp,memSlot);
-
-	//kprintf("RequestedSize:%d*",size);
 	//convert sizeWithHeader to 16 bit boundary
 	long sizeIn16 = 1 + (size/16) + ((size%16)?1:0); //convert to count of 16 bits
 	long sizeWithHeader = sizeIn16*16; //converts back to bits and adds header size
-	//kprintf("sizeWithHeader:%d*",sizeWithHeader);
 
 	//iterate to find node with enough RAM
 	while(temp->next != NULL){ 
-		//kprintf("*temp->size:%d*sizeWithHeader:%d*", temp->size, sizeWithHeader);
 		if(temp->size >= sizeWithHeader){
-			//kprintf(">");
 			break; 
 		}
 		if((temp->next == NULL) && (temp->size<sizeWithHeader)){
@@ -73,7 +65,6 @@ void* kmalloc(int size){
 		}
 		//move pointer if mem less than size
 		temp = temp->next;
-		//kprintf("nextTempsize:%d*temp:%d*",temp->size,temp);
 
 	}
 
@@ -83,7 +74,6 @@ void* kmalloc(int size){
 		//kprintf("<temp:%d*newNode:%d*>",temp,newNode);
 
 		if(temp->prev == NULL){ //if head
-			//kprintf("HEAD");
 			temp->next->prev = newNode;
 
 			newNode->prev = NULL;
@@ -146,7 +136,6 @@ extern void kfree(void *ptr) {
 	//add node into freenodes
 	struct memHeader *temp = memSlot;
 	while (temp->next != NULL) {
-		//kprintf("n:%dsize:%d|", nodeCount,temp->size);
 		temp = temp->next;
 	}
 	temp->next->next = p;

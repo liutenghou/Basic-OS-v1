@@ -63,7 +63,7 @@ exit the caller also with error.
 
 
 Also in:
-mem.c: line 83
+mem.c: line 74
 There is a kprintf() which shows that a new node has been created for the existing free
 space, and that temp(the old node) is returned as free space.
 intput:
@@ -149,10 +149,10 @@ if there is one in registers eax and edx respectively. This test shows that the 
 are passed from syscall to the contextswitcher
 
 - location:
-syscall.c: line 29
+syscall.c: line 26
 input: 
 kprintf("<syscall call: %d, result: %d, function:%d >", call, result, function);
-ctsw.c: line 57
+ctsw.c: line 55
 input: 
 kprintf("<ctsw: eax:%d, func:%d >", EAX, p->function);
 

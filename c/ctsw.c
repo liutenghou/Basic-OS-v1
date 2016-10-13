@@ -28,10 +28,8 @@ static void (*func)(void);
 //loads kernel state back to registers
 //returns to dispatcher to handle syscall
 int contextswitch(struct pcb* p){
-	//kprintf("\nc:");
 
 	ESP = (unsigned int)p->esp;
-	//kprintf("ESP:%d *", ESP);
 	__asm __volatile("\
 			pushf \n\
 			pusha \n\
@@ -61,6 +59,5 @@ int contextswitch(struct pcb* p){
 
 //contextinit() initializes the context switcher and sets the entrypoint for contextswitch in the IDT
 void contextinit(void){
-	//kprintf(" INITCONTEXT ");
 	set_evec(CSENTRY, (int)_ISREntryPoint);
 }

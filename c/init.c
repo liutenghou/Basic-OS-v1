@@ -58,20 +58,18 @@ void initproc( void )				/* The beginning */
   /* Add your code below this line and before next comment */
   kmeminit();
 
-  printNodes();
-
-  struct memHeader *memLocation = (struct memHeader *)kmalloc(16);
-  if(memLocation != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation, memLocation->sanityCheck, memLocation->size);
-  kfree(memLocation);
-  kfree(123);
-  struct memHeader *memLocation2 = (struct memHeader *)kmalloc(20);
-  if(memLocation2 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation2, memLocation2->sanityCheck, memLocation2->size);
-  struct memHeader *memLocation3 = (struct memHeader *)kmalloc(1000000);
-  if(memLocation3 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation3, memLocation3->sanityCheck, memLocation3->size);
-  struct memHeader *memLocation4 = (struct memHeader *)kmalloc(20000);
-  if(memLocation4 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation4, memLocation4->sanityCheck, memLocation4->size);
-  struct memHeader *memLocation5 = (struct memHeader *)kmalloc(2000000000);
-  if(memLocation5 != -1)kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation5, memLocation5->sanityCheck, memLocation5->size);
+//  struct memHeader *memLocation = (struct memHeader *)kmalloc(16);
+//  if(memLocation != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation, memLocation->sanityCheck, memLocation->size);
+//  kfree(memLocation);
+//  kfree(123);
+//  struct memHeader *memLocation2 = (struct memHeader *)kmalloc(20);
+//  if(memLocation2 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation2, memLocation2->sanityCheck, memLocation2->size);
+//  struct memHeader *memLocation3 = (struct memHeader *)kmalloc(1000000);
+//  if(memLocation3 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation3, memLocation3->sanityCheck, memLocation3->size);
+//  struct memHeader *memLocation4 = (struct memHeader *)kmalloc(20000);
+//  if(memLocation4 != -1) kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation4, memLocation4->sanityCheck, memLocation4->size);
+//  struct memHeader *memLocation5 = (struct memHeader *)kmalloc(2000000000);
+//  if(memLocation5 != -1)kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation5, memLocation5->sanityCheck, memLocation5->size);
 
 
    //the last thing init does is create the first user process, then call dispatch()
