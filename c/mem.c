@@ -25,7 +25,7 @@ void kmeminit(void){
   memSlot->next->size = (unsigned long)(maxaddr - HOLEEND);
   memSlot->next->sanityCheck = "pizzapizza";
 
-  //kprintf("freemem: %d, memSlotSize: %d, memSlotNextSize: %d, memSlotNext: %d\n", freemem, memSlot->size, memSlot->next->size, memSlot->next);
+  //kprintf("\nfreemem: %d, memSlotSize: %d, memSlotNextSize: %d, memSlotNext: %d\n", freemem, memSlot->size, memSlot->next->size, memSlot->next);
 }
 
 //shows free mem nodes
@@ -45,7 +45,7 @@ void printNodes(){
 //give set amount of free mem
 //a new node is created at the end of given memory
 //then added to the existing free nodes.
-void *kmalloc(int size){
+void* kmalloc(int size){
 
 	struct memHeader *temp = memSlot;
 	// kprintf("temp:%d.memSlot:%d.",temp,memSlot);
@@ -131,7 +131,7 @@ void *kmalloc(int size){
 		return maxaddr;
 	}
 
-	return maxaddr;
+	return maxaddr; //error
 }
 
 //puts freed memory back into the free pool

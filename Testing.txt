@@ -6,20 +6,28 @@ on a Windows machine display as expected due to the differences with
 respect to how new lines and carriage returns are treated. Line widths
 are to be limited to 80 characters.
 
-
+---------------------------------------------------------------------------------
 Memory Manager Tests
-
+---------------------------------------------------------------------------------
 1) 
 - Test correct initialization of memory with kmeminit()
 
 - kmeminit initializes the two free pieces of memory (with hole in-between) as two nodes.
 The kprintf() statement in:
-mem.c: line 27
+mem.c: line 28
 
-- When uncommented, will show that the correct starting points for the 2 initialized free memory
+When uncommented, will show that the correct starting points for the 2 initialized free memory
 nodes are there. i.e. the nodes start at freemem and HOLEEND respectively.
 The kprintf() also prints the sizes of the two nodes, which should be all the
 available free memory. 
+
+input:
+kprintf("\nfreemem: %d, memSlotSize: %d, memSlotNextSize: %d, memSlotNext: %d\n", freemem, memSlot->size, memSlot->next->size, memSlot->next);
+
+sample output:
+freemem: 43328, memSlotSize: 612032, memSlotNextSize: 2531327, memSlotNext: 1662976
+
+---------------------------------------------------------------------------------
 
 2) 
 - Test kmalloc()
@@ -27,26 +35,97 @@ available free memory.
 - kmalloc is tested with kprinf() statements at:
 init.c: line 66 - line 73
 
+input:
+struct memHeader *memLocation = (struct memHeader *)kmalloc(16);
+kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation, memLocation->sanityCheck, memLocation->size);
+struct memHeader *memLocation2 = (struct memHeader *)kmalloc(20);
+kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation2, memLocation2->sanityCheck, memLocation2->size);
+struct memHeader *memLocation3 = (struct memHeader *)kmalloc(1000000);
+kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation3, memLocation3->sanityCheck, memLocation3->size);
+struct memHeader *memLocation4 = (struct memHeader *)kmalloc(20000);
+kprintf("memLocation: %d, sanityCheck:%s, size:%d\n", memLocation4, memLocation4->sanityCheck, memLocation4->size);
+
 - These lines allocate different amounts of space and the print statement shows that the
-correct memory location is returned to us. 
+correct memory location is returned to us. The sanityCheck shows that the value given to us
+is a memHeader.
 
 Also in:
 mem.c: line 77
 There is a kprintf() which shows that a new node has been created for the existing free
 space, and that temp(the old node) is returned as free space.
+intput:
+kprintf("<temp:%d*newNode:%d*>",temp,newNode);
 
+sample output:
+<temp:43328*newNode:43360*>memLocation: 43328, sanityCheck:pizzapizza, size:16
+<temp:43360*newNode:43408*>memLocation: 43360, sanityCheck:pizzapizza, size:32
+<temp:1662976*newNode:2662992*>memLocation: 1662976, sanityCheck:pizzapizza, siz
+e:1000000
+<temp:43408*newNode:63424*>memLocation: 43408, sanityCheck:pizzapizza, size:2000
+0
 
+---------------------------------------------------------------------------------
 Process Management Tests	
-
+---------------------------------------------------------------------------------
 3) 
 - Test syscreate in root()
 
 - syscreate in root is tested in:
-user.c: lines 16 - 21
+user.c: lines 15 - 34
 
-- Three more pairs of producer and consumer are created, and when these lines are
+- More pairs of producer and consumer are created, and when these lines are
 uncommented, we see that these correctly produce the print statements.
 
+input:
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+syscreate(producer);
+syscreate(consumer);
+
+output:
+py 101s Happy 101s Happy 101s Happy 101s Happy 101s
+Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
+rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
+hday UBC Birthday UBC Birthday UBC
+Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
+py 101s Happy 101s Happy 101s Happy 101s Happy 101s
+Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
+rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
+hday UBC Birthday UBC Birthday UBC
+Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
+py 101s Happy 101s Happy 101s Happy 101s Happy 101s
+Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
+rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
+hday UBC Birthday UBC Birthday UBC
+Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
+py 101s Happy 101s Happy 101s Happy 101s Happy 101s
+Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
+rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
+hday UBC Birthday UBC Birthday UBC
+Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Happy 101s Hap
+py 101s Happy 101s Happy 101s Happy 101s Happy 101s
+Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Bi
+rthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birthday UBC Birt
+hday UBC Birthday UBC Birthday UBC
+
+
+---------------------------------------------------------------------------------
 4)
 - Test contextswitcher receives value from syscall
 
@@ -56,10 +135,22 @@ are passed from syscall to the contextswitcher
 
 - location:
 syscall.c: line 29
+input: 
+kprintf("<syscall call: %d, result: %d, function:%d >", call, result, function);
 ctsw.c: line 57
+input: 
+kprintf("<ctsw: eax:%d, func:%d >", EAX, p->function);
 
+output:
+<ctsw: eax:100, func:5766 ><syscall call: 100, result: 100, function:5766 ><ctsw
+: eax:100, func:5821 ><syscall call: 100, result: 100, function:5821 ><ctsw: eax
+:131, func:0 >
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 
 OVERALL TESTING METHODOLOGY
+---------------------------------------------------------------------------------
 This kernel was tested iteratively, with many kprintf() statements at each stage.
 The stages involved were:
 1) working on kmeminit
